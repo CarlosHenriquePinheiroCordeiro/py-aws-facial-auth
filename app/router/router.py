@@ -1,4 +1,5 @@
-from fastapi import APIRouter, File, UploadFile, Form
+from fastapi import APIRouter, File, UploadFile, Form, status
+from fastapi.responses import JSONResponse
 from app.middlewares.verify_request_middleware import VerifyRequestMiddleware
 from app.services.upload_face import upload_face
 from app.services.detect_face import detect_face
@@ -19,8 +20,11 @@ async def insert_face(
 ):
     face_bytes = await face_img.read()
     detect_face(face_bytes)
-    upload_face(user_id)
-    return {"message": "Face insertion successful!"}
+    upload_face(face_bytes, user_id)
+    return JSONResponse(
+        status_code=status.HTTP_201_CREATED,
+        content={"message": "Face insertion successful!"}
+    )
 
 @router.post("/start-auth-face")
 async def auth_face(
@@ -43,4 +47,7 @@ async def update_face(
     face_bytes = await face_img.read()
     detect_face(face_bytes)
     upload_face(user_id)
-    return {"message": "Face updated successfully!"}
+    return  JSONResponse(
+        status_code=status.HTTP_201_CREATED,
+        content={"message": "Face updated successfully!"}
+    )
