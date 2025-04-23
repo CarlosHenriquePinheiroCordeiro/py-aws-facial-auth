@@ -17,7 +17,6 @@ def match_face(user_id, img_bytes):
             },
             SimilarityThreshold=settings.face_match_confidence_threshold
         )
-        print(response)
         face_matches = response['FaceMatches']
         if (len(face_matches) > 0):
             if (face_matches[0]['Similarity'] >= settings.face_match_confidence_threshold):
