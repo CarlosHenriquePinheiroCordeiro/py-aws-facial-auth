@@ -4,6 +4,7 @@ class Settings(BaseSettings):
     aws_access_key_id: str
     aws_secret_access_key: str
     aws_region_name: str
+    aws_liveness_check_region_name: str
     s3_upload_face_bucket_name: str
     app_env: str
     jaeger_host: str
